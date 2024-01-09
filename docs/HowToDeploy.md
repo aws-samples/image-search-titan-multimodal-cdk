@@ -112,7 +112,7 @@ aws lambda invoke output.txt --cli-read-timeout 0 --function-name [lambda functi
 
 ## 動作確認
 
-CDK スタックのデプロイが完了した段階では、Amazon Opensearch Serverless のコレクションにインデックスが作成されていません。動作確認には、以下の手順でインデックスの作成とデータの登録を実施してください。
+CDK スタックのデプロイが完了し、OpenSearch の index にデータを登録したら、以下の手順で動作確認を実行してください。動作確認の際は、デプロイ手順「4. 画像の取得」でダウンロードした zip ファイルを解凍して得られた images フォルダの中の画像を使ってください。
 
 ### 1. 写真検索アプリにアクセス
 
