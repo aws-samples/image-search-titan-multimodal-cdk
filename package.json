@@ -1,0 +1,26 @@
+{
+  "name": "image-search-multimodal",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "lint": "run-s root:lint web:lint cdk:lint",
+    "root:lint": "npx prettier --write .",
+    "web:devw": "source setup-env.sh && npm -w packages/web run dev",
+    "web:dev": "npm -w packages/web run dev",
+    "web:build": "npm -w packages/web run build",
+    "web:lint": "npm -w packages/web run lint",
+    "cdk:deploy": "npm -w packages/cdk run cdk deploy -- --all",
+    "cdk:destroy": "npm -w packages/cdk run cdk destroy",
+    "cdk:lint": "npm -w packages/cdk run lint"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.4.1",
+    "tailwind-scrollbar": "^3.0.5"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

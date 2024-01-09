@@ -1,0 +1,164 @@
+:root {
+  --grid-cols: 4;
+}
+
+/* ベースのスタイル */
+body {
+  font-family: 'Raleway', 'Noto Sans JP', sans-serif;
+  background-color: #f4f4f4;
+  margin: 5px;
+  padding: 0;
+}
+
+/* コンテナのスタイル */
+div {
+  box-sizing: border-box;
+  margin-bottom: auto;
+  width: 100%;
+}
+
+.left {
+  margin-right: auto;
+}
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.right {
+  margin-left: auto;
+}
+
+/* ボタンのスタイル */
+button {
+  background-color: #007bff;
+  color: white;
+  border: 2px solid #007bff;
+  padding: 7px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+button.light {
+  background-color: #daecff;
+  color: #004b9c;
+  border: 2px solid #004b9c;
+  padding: 7px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button.light:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+/* 画像のスタイル */
+img {
+  max-width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+/* 画像のキャプションのスタイル */
+div.caption {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+div.query {
+  margin: 0 auto;
+  width: 100%;
+  background-color: white; /* 背景色を指定 */
+}
+
+/* タイルを含むメインのコンテナのスタイル */
+div.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* タイル間のスペース */
+  justify-content: flex-start;
+  padding: 20px; /* コンテナ自体のパディング */
+  background-color: #f4f4f4; /* 背景色を指定 */
+  align-items: flex-start;
+}
+
+/* 個々のタイルのスタイル */
+div.tile {
+  flex: 0 0 calc(100% / var(--grid-cols) - 20px);
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: white; /* タイルの背景色 */
+  border: 1px solid #ddd; /* タイルのボーダー */
+  border-radius: 5px; /* タイルの角を丸く */
+  transition: box-shadow 0.3s ease; /* ホバー時の影のアニメーション */
+}
+
+div.tile:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ホバー時の影 */
+}
+
+/* タイル内のテキストのスタイル */
+div.tile > div {
+  margin-bottom: 10px; /* 画像との間隔を空ける */
+}
+
+/* タイル内の画像のスタイル */
+div.tile img {
+  max-width: 100%; /* 画像がタイルの幅を超えないようにする */
+  border-radius: 5px; /* 画像の角を丸く */
+}
+
+.mr-2 {
+  margin-right: 0.5rem/* 8px */;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* 点滅するアニメーション */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.processing-text {
+  font-size: 24px; /* フォントサイズの調整 */
+  color: #e74c3c; /* 色の変更 */
+  text-align: center;
+  padding: 20px 0; /* 上下の空間を開ける */
+  animation: blink 1.5s infinite; /* 点滅するアニメーションの適用 */
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
