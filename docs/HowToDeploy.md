@@ -8,7 +8,7 @@
 
 ### 1. Amazon Bedrock のモデルアクセス設定
 
-- **このサンプルは、デフォルトでバージニア北部 (us-east-1) リージョンの Titan Multimodal Embeddings モデルを利用する設定になっています。[Model access 画面](https://us-east-1.console.aws.amazon.com/bedrock/home?region=us-east-1#/modelaccess) を開き、「Edit」 → 「Titan Multimodal Embeddings にチェック」 → 「Save changes」 と操作して、バージニア北部リージョンにて Amazon Bedrock (基盤モデル: 「Titan) を利用できる状態にしてください。**
+- **このサンプルは、デフォルトでバージニア北部 (us-east-1) リージョンの Titan Multimodal Embeddings モデルを利用する設定になっています。[Model access 画面](https://us-east-1.console.aws.amazon.com/bedrock/home?region=us-east-1#/modelaccess) を開き、「Manage model access」 → 「Titan Multimodal Embeddings にチェック」 → 「Save changes」 と操作して、バージニア北部リージョンにて Amazon Bedrock (基盤モデル: 「Titan) を利用できる状態にしてください。すでにチェックされていて Access status が「Access granted」と表示されている場合はこの作業は不要です。**
 - 上記の手順を行わずに Amazon Bedrock にリクエストすると、「403 Forbidden」エラーが発生します。
 - 他のリージョンを使いたい場合は、使いたいリージョンで上記手順を実行のうえ `packages/cdk/cdk.json` の `bedrockRegion` を書き換えて下さい。
 
@@ -25,7 +25,7 @@ AWS Cloud9 で CDK を使うには、容量の拡張等が必要です。以下�
 1. [AWS マネージメントコンソールを利用した方法](https://catalog.workshops.aws/building-with-amazon-bedrock/en-US/prerequisites/cloud9-setup)
 
   - インスタンスタイプ t3.small (2 GiB RAM + 2 vCPU) 、Amazon Linux2 で動作確認しました。
-  - デフォルトのストレージサイズ（10GB）で動作確認済みですが、もしストレージ不足のエラーが出た場合はストレージサイズを変更して下さい。ストレージサイズ変更方法は [こちら](https://docs.aws.amazon.com/ja_jp/cloud9/latest/user-guide/move-environment.html#move-environment-resize) をご参照ください。20GiB あれば十分です。
+  - デフォルトのストレージサイズ（10GB）で動作確認済みですが、もしストレージ不足のエラーが出た場合はストレージサイズを変更して下さい。ストレージサイズ変更方法は [こちらのドキュメント（英語版）](https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html#move-environment-resize) をご参照ください。20GiB あれば十分です。
 
 2. [CloudShell を利用した方法](https://github.com/aws-samples/cloud9-setup-for-prototyping)
 
