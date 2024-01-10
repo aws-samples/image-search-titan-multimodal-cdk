@@ -40,6 +40,7 @@ export class PublicRestApi extends Construct {
     const logGroup = new logs.LogGroup(this, 'LogGroup');
     this.restApi = new apigw.RestApi(this, id, {
       policy: resourcePolicy,
+      cloudWatchRole: true,
       deployOptions: {
         stageName: 'api',
         loggingLevel: apigw.MethodLoggingLevel.INFO,
