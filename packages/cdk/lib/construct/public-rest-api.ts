@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import * as apigw from 'aws-cdk-lib/aws-apigateway';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as iam from 'aws-cdk-lib/aws-iam';
+import * as cdk from 'aws-cdk-lib/core';
 
 export interface PublicRestApiProps {
   apiAccessSourceIp: string;
@@ -41,6 +42,7 @@ export class PublicRestApi extends Construct {
     this.restApi = new apigw.RestApi(this, id, {
       policy: resourcePolicy,
       cloudWatchRole: true,
+      cloudWatchRoleRemovalPolicy: cdk.RemovalPolicy.DESTROY,
       deployOptions: {
         stageName: 'api',
         loggingLevel: apigw.MethodLoggingLevel.INFO,
