@@ -142,6 +142,29 @@ CDKスタックデプロイ時に `Outputs:` に表示された `...WebAppDomain
 npm run cdk:destroy
 ```
 
+API Gateway の CloudWatch log role ARN に設定していた IAM Role を含めてリソースが削除されます。後日 API Gateway を使う際に「CloudWatch log role ARN に設定されている IAM Role が存在しません」のようなエラーが出たら、API Gateway のコンソールのメニューにある「Settings」をクリックし、「CloudWatch log role ARN」に以下のような policy を含む IAM Role の ARN を設定してください。
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:DescribeLogGroups",
+                "logs:DescribeLogStreams",
+                "logs:PutLogEvents",
+                "logs:GetLogEvents",
+                "logs:FilterLogEvents"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
 ## コスト
 
 本サンプルをデプロイして 24時間後に削除することで発生する料金と、各サービスの料金に関する情報は以下のとおりです。最新情報は各サービス名をクリックし、料金ページで内容をご確認ください。使用しているサービスのほとんどは従量課金ですが、Amazon OpenSearch Serverless のみリソースを削除するまで課金が発生するため、使い終わったら必ず CDK スタックの削除を実行して下さい。
