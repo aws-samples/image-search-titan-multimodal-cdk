@@ -24,11 +24,10 @@ AWS Cloud9 で CDK を使うには、容量の拡張等が必要です。以下�
 
 1. [AWS マネージメントコンソールを利用した方法](https://catalog.workshops.aws/building-with-amazon-bedrock/en-US/prerequisites/cloud9-setup)
 
-  - インスタンスタイプ t3.small (2 GiB RAM + 2 vCPU) 、Amazon Linux2 で動作確認しました。
-  - デフォルトのストレージサイズ（10GB）で動作確認済みですが、もしストレージ不足のエラーが出た場合はストレージサイズを変更して下さい。ストレージサイズ変更方法は [こちらのドキュメント（英語版）](https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html#move-environment-resize) をご参照ください。20GiB あれば十分です。
+- インスタンスタイプ t3.small (2 GiB RAM + 2 vCPU) 、Amazon Linux2 で動作確認しました。
+- デフォルトのストレージサイズ（10GB）で動作確認済みですが、もしストレージ不足のエラーが出た場合はストレージサイズを変更して下さい。ストレージサイズ変更方法は [こちらのドキュメント（英語版）](https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html#move-environment-resize) をご参照ください。20GiB あれば十分です。
 
 2. [CloudShell を利用した方法](https://github.com/aws-samples/cloud9-setup-for-prototyping)
-
 
 ## Scope of this sample
 
@@ -64,7 +63,15 @@ npm ci
 - allowedApiCallOriginList（任意）
   - CORP の Origin 許可を設定します。CORS とは、ウェブサイトが別のオリジンのリソースにアクセスすることをブラウザが制限する仕組みです。CORS の Origin とは、リクエストを送信するウェブサイトのオリジン（プロトコル、ホスト名、ポート番号）のことです。https://example.com、http://localhost:5173 のように指定します。CORS で許可されていない Origin からのクロスオリジンリクエスト（異なる Origin へのアクセス）は、ブラウザによってブロックされます。アクセスを許可したい Origin のみを指定することで、想定外の Origin からのアクセスを防ぐことができます。デフォルトでは全ての Origin を受け入れるよう設定されています。
 
-### 3. CDK のセットアップ
+### 3. 画像の取得
+
+以下のコマンドを実行して、検索対象の画像一式をプロジェクトのルートディレクトリ（docsフォルダと同じ階層）にダウンロードしてください。
+
+```bash
+wget https://d1.awsstatic.com/Developer%20Marketing/jp/magazine/sample/2024/images.2dd13d52369e3b347b9450315d69d7e819e55834.zip -O images.zip
+```
+
+### 4. CDK のセットアップ
 
 CDK のセットアップをします。
 この作業は、AWS アカウントのあるリージョンで初めて CDK を利用する際に必要になります。
@@ -72,14 +79,6 @@ CDK のセットアップをします。
 
 ```bash
 npx -w packages/cdk cdk bootstrap
-```
-
-### 4. 画像の取得
-
-以下のコマンドを実行して、検索対象の画像一式をプロジェクトのルートディレクトリ（docsフォルダと同じ階層）にダウンロードしてください。
-
-```bash
-wget https://d1.awsstatic.com/Developer%20Marketing/jp/magazine/sample/2024/images.2dd13d52369e3b347b9450315d69d7e819e55834.zip -O images.zip
 ```
 
 ### 5. CDK スタックのデプロイ
@@ -98,7 +97,7 @@ npm run cdk:deploy
 コマンドの最後にある `[lambda function name]` には、cdk スタックをデプロイした際にターミナルに表示される `Outputs:` にある `...indexImagesFunctionName...` に書かれた Lambda 関数名に置き換えてください。
 
 ```bash
-aws lambda invoke output.txt --cli-read-timeout 0 --function-name [lambda function name] 
+aws lambda invoke output.txt --cli-read-timeout 0 --function-name [lambda function name]
 ```
 
 数分ほど待つと、以下のようなログが表示されます。これが表示されたら、すべての準備が整ったことになります。
@@ -146,22 +145,22 @@ API Gateway の CloudWatch log role ARN に設定していた IAM Role を含め
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:DescribeLogGroups",
-                "logs:DescribeLogStreams",
-                "logs:PutLogEvents",
-                "logs:GetLogEvents",
-                "logs:FilterLogEvents"
-            ],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams",
+        "logs:PutLogEvents",
+        "logs:GetLogEvents",
+        "logs:FilterLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
 }
 ```
 
@@ -175,12 +174,12 @@ API Gateway の CloudWatch log role ARN に設定していた IAM Role を含め
 - 無料利用枠や ReservedInstance は考慮しておりません。
 - 価格はあくまで参考であり、完全に正確なものではございません。実運用を想定した試算のためのヒントとしてご活用ください。
 
-| サービス                                                                      | 料金  | 料金試算方法                                                                                                                                                                                                                                                                                                               |
-| ----------------------------------------------------------------------------- | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Amazon OpenSearch Serverless](https://aws.amazon.com/jp/opensearch-service/pricing/#Amazon_OpenSearch_Serverless) | 12.05  | トータル 12.05 USD。（インデックス作成  0.334USD/1 OCU, 1 hour * 0.5 OCU * 24 hours = 4.008 USD、検索とクエリ 0.334 USD/1 OCU, 1 hour * 1 OCU * 24 hours = 8.016 USD、ストレージ 0.026 USD/month, GB * 1 = 0.026 USD）                  |
-| [Amazon Bedrock](https://aws.amazon.com/jp/bedrock/pricing/) | 0.02  | インデックスへの画像登録枚数 229 x 0.00006USD/1枚 = 0.01374 USD かかります。そのほか、検索時にのテキストに対し 0.0008USD/1000 tokens、画像に対し て 0.00006USD/1枚 かかります。|
-| [Amazon S3](https://aws.amazon.com/jp/s3/pricing/)                            | 0.025 | ストレージの料金、リクエストとデータ取り出しの料金、データ転送と転送高速化の料金、データ管理機能および分析機能の料金、レプリケーションの料金および S3 Object Lambda でデータを処理するための料金がかかります。ストレージ料金は 0.025USD/GB。         |
-| [AWS Lambda](https://aws.amazon.com/jp/lambda/pricing/)                       | 0.0   | 料金は、関数に対するリクエストの数とコードの実行時間に基づいて算出されます。        |
-| [Amazon CloudWatch](https://aws.amazon.com/jp/cloudwatch/pricing/)            | 0.76  | ログの保存に 0.76USD/GB かかります。1GB で試算。             |                                                                                                                                                                 
+| サービス                                                                                                           | 料金  | 料金試算方法                                                                                                                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Amazon OpenSearch Serverless](https://aws.amazon.com/jp/opensearch-service/pricing/#Amazon_OpenSearch_Serverless) | 12.05 | トータル 12.05 USD。（インデックス作成 0.334USD/1 OCU, 1 hour _ 0.5 OCU _ 24 hours = 4.008 USD、検索とクエリ 0.334 USD/1 OCU, 1 hour _ 1 OCU _ 24 hours = 8.016 USD、ストレージ 0.026 USD/month, GB \* 1 = 0.026 USD）                       |
+| [Amazon Bedrock](https://aws.amazon.com/jp/bedrock/pricing/)                                                       | 0.02  | インデックスへの画像登録枚数 229 x 0.00006USD/1枚 = 0.01374 USD かかります。そのほか、検索時にのテキストに対し 0.0008USD/1000 tokens、画像に対し て 0.00006USD/1枚 かかります。                                                              |
+| [Amazon S3](https://aws.amazon.com/jp/s3/pricing/)                                                                 | 0.025 | ストレージの料金、リクエストとデータ取り出しの料金、データ転送と転送高速化の料金、データ管理機能および分析機能の料金、レプリケーションの料金および S3 Object Lambda でデータを処理するための料金がかかります。ストレージ料金は 0.025USD/GB。 |
+| [AWS Lambda](https://aws.amazon.com/jp/lambda/pricing/)                                                            | 0.0   | 料金は、関数に対するリクエストの数とコードの実行時間に基づいて算出されます。                                                                                                                                                                 |
+| [Amazon CloudWatch](https://aws.amazon.com/jp/cloudwatch/pricing/)                                                 | 0.76  | ログの保存に 0.76USD/GB かかります。1GB で試算。                                                                                                                                                                                             |
 
 EOF
