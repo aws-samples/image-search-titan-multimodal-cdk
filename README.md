@@ -1,6 +1,6 @@
 # 写真検索アプリ
 
-Amazon Bedrock と Amazon OpenSearch Serverless を使って、以下のような写真を検索するアプリをデプロイするためのサンプルコードです。[このアプリの解説記事]() もあわせてご参照ください。
+Amazon Bedrock と Amazon OpenSearch Serverless を使って、以下のような写真を検索するアプリをデプロイするためのサンプルコードです。[このアプリの解説記事](https://aws.amazon.com/jp/builders-flash/202402/powerup-cat-image-search/) もあわせてご参照ください。
 
 <img src="docs/imgs/app.png" width="700px">
 
